@@ -1,5 +1,6 @@
 #include <cassert>
 #include <string>
+#include <map>
 #include <iostream>
 
 #include "single_linked_list.h"
@@ -154,3 +155,56 @@ void MyTest_PopFront() {
     std::cout << "CHECK: /Fourth/ should've just been deleted"s << std::endl; 
 }
 
+
+
+
+
+void MyTest_EraseAfter() {
+    using namespace std::string_literals; 
+    SingleLinkedList<std::string> one {"ku"s, "su"s, "ru"s, "zu"s}; 
+
+    assert(one.GetSize() == 4); 
+    one.EraseAfter(one.begin()); 
+    assert(*one.begin() == "ku"s);
+    assert(one.GetSize() == 3); 
+    
+    one.EraseAfter(++one.begin()); 
+    assert(*one.begin() == "ku"s);
+    assert(one.GetSize() == 2); 
+
+    //PrintList(one); 
+    auto it = one.begin(); 
+    assert(*it == "ku"s);
+    ++it; 
+    assert(*it == "ru"s);
+
+    //before_begin
+    one.EraseAfter(one.before_begin()); 
+    assert(*one.begin() == "ru"s);
+    assert(one.GetSize() == 1); 
+
+    one.EraseAfter(one.before_begin()); 
+    assert(one.GetSize() == 0); 
+    assert(one.begin() == one.end()); 
+
+
+    struct ScreamsDeletion {
+        ScreamsDeletion() = default; 
+        ScreamsDeletion(std::string name) : name_(name) {}       
+        ~ScreamsDeletion() {std::cout << "--- "s  << name_ << std::endl; }
+        std::string name_ = "no *** name"s;
+    }; 
+
+    SingleLinkedList<ScreamsDeletion> two; 
+    two.PushFront(ScreamsDeletion("4th"s));
+    two.PushFront(ScreamsDeletion("3rd"s));
+    two.PushFront(ScreamsDeletion("2nd"s));
+    two.PushFront(ScreamsDeletion("1st"s));
+
+    two.EraseAfter(++two.begin()); 
+
+
+    std::cout << "CHECK: /3rd/ should've just been deleted"s << std::endl; 
+
+
+}

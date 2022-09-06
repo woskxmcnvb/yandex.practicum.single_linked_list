@@ -5,8 +5,8 @@
 
 #include "single_linked_list.h"
 
-#include "yandex_tests.cpp"
-#include "my_tests.cpp"
+#include "yandex_tests.h"
+#include "my_tests.h"
 
 
 
@@ -19,9 +19,12 @@ int main() {
 
     //Test_Swap(); 
     //Test_Initializer_List(); 
-    MyTest_Copy_constructor(); 
+    //MyTest_Copy_constructor(); 
 
     //Test3(); 
 
-    MyTest_PopFront();
+    //MyTest_PopFront();
+    //MyTest_EraseAfter();
+    Test4(); 
+
 }

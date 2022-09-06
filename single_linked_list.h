@@ -44,9 +44,7 @@ class SingleLinkedList {
         // Конвертирующий конструктор/конструктор копирования
         // При ValueType, совпадающем с Type, играет роль копирующего конструктора
         // При ValueType, совпадающем с const Type, играет роль конвертирующего конструктора
-        BasicIterator(const BasicIterator<Type>& other) noexcept {
-            node_ = other.node_;
-        }
+        BasicIterator(const BasicIterator<Type>& other) noexcept { node_ = other.node_; }
 
         // Операторы ++ * -> для несуществующих элементов приводят к неопределенному поведению 
 
@@ -140,13 +138,21 @@ public:
     // Возвращает итератор, указывающий на позицию перед первым элементом односвязного списка.
     [[nodiscard]] Iterator before_begin() noexcept {
         return Iterator(&head_);
+        
     }
+    
     [[nodiscard]] ConstIterator cbefore_begin() const noexcept {
-        return Iterator(&head_);
+        Iterator it(&head_);
+        return (nullptr); 
     }
+    
+    /*
     [[nodiscard]] ConstIterator before_begin() const noexcept {
-        return Iterator(&head_);
-    }
+        std::cout << "const called" << std::endl;
+        return ConstIterator(before_begin());
+        
+    }*/
+
 
 
 
@@ -212,21 +218,19 @@ public:
     }
 
     void PopFront() noexcept {
-        if (size_ > 0) {
-            Node* to_drop = head_.next_node; 
-            head_.next_node = to_drop->next_node; 
-            delete to_drop; 
-            --size_; 
-        }
+        EraseAfter(before_begin()); 
     }
 
     //Возвращает итератор на элемент, следующий за удалённым
     Iterator EraseAfter(ConstIterator pos) noexcept {
-        // Заглушка. Реализуйте метод самостоятельно
-        return {};
+        if (pos != end()) {
+            Node * to_drop = pos.node_->next_node; 
+            pos.node_->next_node = to_drop->next_node; 
+            delete to_drop; 
+            --size_;
+        }
+        return Iterator(pos.node_->next_node); 
     }
-
-
 
 private:
 
