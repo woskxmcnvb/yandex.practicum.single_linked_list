@@ -6,7 +6,8 @@
 #include "single_linked_list.h"
 
 
-void Test_GetSize_IsEmpty() {
+
+void YTest_GetSize_IsEmpty() {
     using namespace std;
     {
         const SingleLinkedList<int> empty_int_list;
@@ -19,9 +20,13 @@ void Test_GetSize_IsEmpty() {
         assert(empty_string_list.GetSize() == 0u);
         assert(empty_string_list.IsEmpty());
     }
+ 
+    std::cout << "###YTest_GetSize_IsEmpty is OK" << std::endl;
 }
 
-void Test_PushFront_Clear() {
+
+
+void YTest_PushFront_Clear() {
     // Шпион, следящий за своим удалением
     struct DeletionSpy {
         DeletionSpy() = default;
@@ -154,9 +159,11 @@ void Test_PushFront_Clear() {
         }
         assert(exception_was_thrown);
     }
+
+    std::cout << "###YTest_PushFront_Clear is OK" << std::endl;
 }
 
-void Test_Iterator() {
+void YTest_Iterator() {
     // Итерирование по пустому списку
     {
         SingleLinkedList<int> list;
@@ -237,6 +244,8 @@ void Test_Iterator() {
         string_list.begin()->push_back('!');
         assert(*string_list.begin() == "one!"s);
     }
+
+    std::cout << "###YTest_Iterator is OK" << std::endl;
 }
 
 
@@ -412,7 +421,7 @@ void Test3() {
         dst_list.begin()->countdown_ptr = &dst_counter;
         dst_list.PushFront(ThrowOnCopy{});
 
-        /**
+
         try {
             dst_list = src_list;
             // Ожидается исключение при присваивании
@@ -432,11 +441,10 @@ void Test3() {
             // Других типов исключений не ожидается
             assert(false);
         }
-        */
+
     }
     
 }
-
 
 
 
@@ -452,7 +460,7 @@ void Test4() {
         int* deletion_counter_ptr = nullptr;
     };
 
-    /*
+
     // Проверка PopFront
     {
         SingleLinkedList<int> numbers{3, 14, 15, 92, 6};
@@ -467,10 +475,10 @@ void Test4() {
         list.PopFront();
         assert(deletion_counter == 1);
     }
-    */
 
 
-    /**
+
+
     /// мои попытки разобраться
     {   
         SingleLinkedList<int> empty_list;
@@ -480,8 +488,9 @@ void Test4() {
         auto it = empty_list.begin(); 
         auto it_2 = empty_list.cbegin(); 
         assert(it == it_2); 
-    } */
+    } 
     
+
     // Доступ к позиции, предшествующей begin
     {
         SingleLinkedList<int> empty_list;
@@ -500,7 +509,7 @@ void Test4() {
         //assert(++numbers.cbefore_begin() == const_numbers.begin());
     }
 
-    /*
+
     // Вставка элемента после указанной позиции
     {  // Вставка в пустой список
         {
@@ -601,7 +610,8 @@ void Test4() {
             assert(deletion_counter == 1u);
         }
     }
-    */
-}
+
+} 
+
 
 

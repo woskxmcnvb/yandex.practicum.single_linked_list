@@ -10,21 +10,20 @@
 
 
 
-
-
 int main() {
-    //Test_GetSize_IsEmpty();
-    //Test_PushFront_Clear(); 
-    //Test_Iterator(); 
+    YTest_GetSize_IsEmpty();
+    YTest_PushFront_Clear(); 
+    YTest_Iterator(); 
 
-    //Test_Swap(); 
-    //Test_Initializer_List(); 
-    //MyTest_Copy_constructor(); 
+    MyTest_Swap(); 
 
-    //Test3(); 
+    MyTest_Initializer_List(); 
+    MyTest_Copy_constructor(); 
 
-    //MyTest_PopFront();
-    //MyTest_EraseAfter();
+    MyTest_PopFront();
+    MyTest_EraseAfter();
+
+    Test3();
     Test4(); 
 
 }

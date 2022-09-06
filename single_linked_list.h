@@ -112,14 +112,14 @@ public:
 
     // Возвращает итератор, ссылающийся на первый элемент
     [[nodiscard]] Iterator begin() noexcept {
-        return Iterator(head_.next_node); 
+        return Iterator(head_->next_node); 
     }
     [[nodiscard]] ConstIterator cbegin() const noexcept {
-        return Iterator(head_.next_node);
+        return Iterator(head_->next_node);
     }
     // эквивалентен cbegin()
     [[nodiscard]] ConstIterator begin() const noexcept {
-        return Iterator(head_.next_node);
+        return Iterator(head_->next_node);
     }
 
     // Возвращает итератор, указывающий на позицию, следующую за последним элементом односвязного списка
@@ -137,32 +137,33 @@ public:
 
     // Возвращает итератор, указывающий на позицию перед первым элементом односвязного списка.
     [[nodiscard]] Iterator before_begin() noexcept {
-        return Iterator(&head_);
-        
+        return Iterator(head_);
     }
-    
+
     [[nodiscard]] ConstIterator cbefore_begin() const noexcept {
-        Iterator it(&head_);
-        return (nullptr); 
+        return Iterator(head_);
     }
     
-    /*
     [[nodiscard]] ConstIterator before_begin() const noexcept {
-        std::cout << "const called" << std::endl;
-        return ConstIterator(before_begin());
-        
-    }*/
-
-
-
+        return Iterator(head_);
+    }
 
 
 
 public:
-    SingleLinkedList() {}
+    SingleLinkedList() : head_(new Node()) {}
+
+    SingleLinkedList(std::initializer_list<Type> values) : head_(new Node()) {
+        FillWithValues(values.begin(), values.end());
+    }
+
+    SingleLinkedList(const SingleLinkedList& other) : head_(new Node()) {
+        FillWithValues(other.begin(), other.end());
+    }
     
     ~SingleLinkedList() {
         Clear();
+        delete head_; 
     }
 
     [[nodiscard]] size_t GetSize() const noexcept {
@@ -174,25 +175,17 @@ public:
     }
 
     void PushFront(const Type& value) {
-        head_.next_node = new Node(value, head_.next_node); 
+        head_->next_node = new Node(value, head_->next_node); 
         ++size_; 
     }
 
     void Clear() noexcept {
-        while (head_.next_node) {
-            Node* tmp = head_.next_node;
-            head_.next_node = head_.next_node->next_node; 
+        while (head_->next_node) {
+            Node* tmp = head_->next_node;
+            head_->next_node = head_->next_node->next_node; 
             delete tmp;      
         }
         size_ = 0;
-    }
-
-    SingleLinkedList(std::initializer_list<Type> values) {
-        FillWithValues(values.begin(), values.end());
-    }
-
-    SingleLinkedList(const SingleLinkedList& other) {
-        FillWithValues(other.begin(), other.end());
     }
 
     SingleLinkedList& operator=(const SingleLinkedList& rhs) {
@@ -205,7 +198,7 @@ public:
 
     // Обменивает содержимое списков за O(1)
     void swap(SingleLinkedList& other) noexcept {
-        std::swap(head_.next_node, other.head_.next_node); 
+        std::swap(head_->next_node, other.head_->next_node); 
         std::swap(size_, other.size_); 
     }
 
@@ -213,8 +206,8 @@ public:
     // Возвращает итератор на вставленный элемент
     // Если при создании элемента будет выброшено исключение, список останется в прежнем состоянии
     Iterator InsertAfter(ConstIterator pos, const Type& value) {
-        pos->next_node = new Node(value, pos->next_node); 
-        return ++pos; 
+        pos.node_->next_node = new Node(value, pos.node_->next_node);  
+        return Iterator(pos.node_->next_node); 
     }
 
     void PopFront() noexcept {
@@ -240,7 +233,7 @@ private:
         // пытаемся построить временный список, в процессе все может сломаться
         try {
             SingleLinkedList temp;
-            Node* last_node = &temp.head_; 
+            Node* last_node = temp.head_; 
             for (auto it = begin_; it != end_; ++it) {
                 last_node->next_node = new Node(*it, nullptr); 
                 last_node = last_node->next_node;  
@@ -255,7 +248,7 @@ private:
     }
 
     // Фиктивный узел, используется для вставки "перед первым элементом"
-    Node head_;
+    Node *head_;
     size_t size_ = 0;
 };
 

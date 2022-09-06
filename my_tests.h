@@ -13,7 +13,9 @@ void PrintList(const List& list_) {
     std::cout << std::endl;
 }
 
-void Test_Swap() {
+
+
+void MyTest_Swap() {
     using namespace std::string_literals; 
     SingleLinkedList<std::string> one; 
     one.PushFront("ku"s); 
@@ -37,12 +39,12 @@ void Test_Swap() {
     assert(empty.GetSize() == 3); 
     assert(one.GetSize() == 2); 
 
-    std::cout << "Swap is OK" << std::endl;
+    std::cout << "####Swap is OK" << std::endl;
 
 }
 
 
-void Test_Initializer_List() {
+void MyTest_Initializer_List() {
     using namespace std::string_literals; 
     /**
     {
@@ -101,7 +103,7 @@ void Test_Initializer_List() {
         std::cout << "Не должно ломаться" << std::endl;
     }
 
-    std::cout << "Initializer list is OK-------------" << std::endl;
+    std::cout << "####Initializer list is OK" << std::endl;
 }
 
 void MyTest_Copy_constructor() {
