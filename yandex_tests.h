@@ -494,19 +494,16 @@ void Test4() {
     // Доступ к позиции, предшествующей begin
     {
         SingleLinkedList<int> empty_list;
-        //const auto& const_empty_list = empty_list;
-        auto it = empty_list.before_begin(); 
-        auto it_2 = empty_list.cbefore_begin();
-        assert(it == it_2);  
-        //assert(empty_list.before_begin() == empty_list.cbefore_begin());
-        //assert(++empty_list.before_begin() == empty_list.begin());
-        //assert(++empty_list.cbefore_begin() == const_empty_list.begin());
+        const auto& const_empty_list = empty_list;
+        assert(empty_list.before_begin() == empty_list.cbefore_begin());
+        assert(++empty_list.before_begin() == empty_list.begin());
+        assert(++empty_list.cbefore_begin() == const_empty_list.begin());
 
-        //SingleLinkedList<int> numbers{1, 2, 3, 4};
-        //const auto& const_numbers = numbers;
-        //assert(numbers.before_begin() == numbers.cbefore_begin());
-        //assert(++numbers.before_begin() == numbers.begin());
-        //assert(++numbers.cbefore_begin() == const_numbers.begin());
+        SingleLinkedList<int> numbers{1, 2, 3, 4};
+        const auto& const_numbers = numbers;
+        assert(numbers.before_begin() == numbers.cbefore_begin());
+        assert(++numbers.before_begin() == numbers.begin());
+        assert(++numbers.cbefore_begin() == const_numbers.begin());
     }
 
 

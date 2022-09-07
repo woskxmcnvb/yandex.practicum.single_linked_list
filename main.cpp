@@ -11,6 +11,7 @@
 
 
 int main() {
+    /*
     YTest_GetSize_IsEmpty();
     YTest_PushFront_Clear(); 
     YTest_Iterator(); 
@@ -24,6 +25,9 @@ int main() {
     MyTest_EraseAfter();
 
     Test3();
+    */
     Test4(); 
+
+
 
 }

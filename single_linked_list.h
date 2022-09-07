@@ -207,6 +207,7 @@ public:
     // Если при создании элемента будет выброшено исключение, список останется в прежнем состоянии
     Iterator InsertAfter(ConstIterator pos, const Type& value) {
         pos.node_->next_node = new Node(value, pos.node_->next_node);  
+        ++size_; 
         return Iterator(pos.node_->next_node); 
     }
 
